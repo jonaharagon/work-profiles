@@ -2,7 +2,7 @@
 
 This is a suite of apps I've built to create and manage Android Work Profiles. The flagship app in this suite is [**Fortress**](https://github.com/jonaharagon/fortress), a minimal-as-possible Device Policy Controller which allows you to create a Work Profile that is personally managed, rather than managed by an employer and/or complex mobile management server.
 
-> [!IMPORTANT]
+> [!WARNING]
 > Our security features are only as strong as the Work Profile implementation of the Android OS you are using. Some OEMs may strip capabilities or have non-functional Work Profile implementations, which we cannot resolve.
 
 I built these apps specifically to address a longstanding problem I've had with other apps that perform a similar function (allow people to create non-employer-managed Work Profiles): The large attack surface, custom features which bypass AOSP's native isolation between Work and Profile spaces, and the lack of modernization when it comes to modern (sdk > 30) features that Android Work Profiles support.
@@ -29,14 +29,14 @@ Thus, the value proposition of Fortress is **security through minimalism.** I be
 
 ## The apps
 
-> [!NOTE]
+> [!IMPORTANT]
 > Fortress and its companion apps strictly **only** make use of Work Profile APIs exposed by AOSP. We will **never** implement features which require becoming your device owner or taking over your personal profile, leveraging or abusing adb privileges, implementing features which require root, or delegating privileged tasks to third-parties. We will **only** ever make use of APIs which AOSP has sanctioned for a Work Profile admin's use.
 
 ### Fortress
 
 **Fortress** is the tool which actually creates and owns the work profile (profile owner). Fortress has no app cloning capability: You are intended to create a work profile using Fortress, install an app store or web browser, and then install any apps you require in your work profile from there. However, this presents a chicken-and-egg situation on **some** systems: Fortress does not modify the apps which are initially installed in your Work Profile, this is decided by your Android OS. This could mean that with some OEMs, you could end up with no web browser or app store installed at all, leaving it impossible to install the rest of your apps!
 
-For this reason, Fortress comes bundled with [Freighter](#freighter)'s APK. You can install it in your Work Profile by tapping a button in the Fortress app. This installation is gated by you needing to "allow installs from unknown sources" for Fortress, and by you needing to manually consent to installing Freighter through Android's typical app install prompt.
+For this reason, Fortress comes *bundled* with Freighter (the next app)'s APK. You can install Freighter in your Work Profile by tapping a button in the Fortress app. This installation is gated by you needing to "allow installs from unknown sources" for Fortress, and by you needing to manually consent to installing Freighter through Android's typical app install prompt.
 
 > [!NOTE]
 > [**You should read Fortress' own README in full for an explanation of the app's security and features →**](https://github.com/jonaharagon/fortress)
@@ -68,6 +68,8 @@ Freighter differs from other app cloning solutions in an important way: Instead 
 
 **Fortress-locked** is an in-place upgrade for Fortress which **strictly** enforces as-complete-as-possible cross-profile isolation, and the **smallest possible attack surface.** The entire source code of this app essentially does two things: Enable all cross-profile isolation features we can, revoke Freighter's, Freezer's, and Foreman's abilities, and keep the Work Profile alive. Normally, if you install a Work Profile you can never uninstall the admin app without deleting that Work Profile, making the admin app a perpetual security risk. We resolved with Fortress-locked, because it essentially functions as a no-op app to keep the profile alive and nothing else.
 
+Fortress-locked is signed with the same key as Fortress and has the same package ID. The difference is that practically everything is removed, and it has a super high version number so that it is never auto-updated by app stores and can never be downgraded to a regular Fortress install. It is (my belief that this is) the best possible Work Profile implementation for privacy and cross-profile isolation. However, this also has very significant drawbacks for convenience and in other areas. I believe **regular Fortress is more than hardened enough** for most people, but Fortress-locked may be an interesting option for the *most* advanced and *most* security-conscious users out there.
+
 > [!CAUTION]
 > Installing Fortress-locked is an IRREVERSIBLE modification to your Fortress installation. It is absolutely essential you read the full explanation and instructions **BEFORE INSTALLING** the app.
 >
@@ -89,7 +91,9 @@ These delegations are granted only to the three specific apps above, Fortress wi
 
 As an aside, `DELEGATION_PERMISSION_GRANT` is the fourth grant which we do not implement. This delegation is actually one of the very few that some Fortress alternatives do take advantage of, namely, Insular/Island grants this permission to some third-party apps (Greenify/Ice Box). It allows an app to (1) set the runtime permissions (essentially anything you normally see a prompt for: camera, microphone, photos, etc.) for a specific app, and (2) set a "permissions policy" which would apply a runtime permission default for the entire Work Profile.
 
-I considered making a companion app which would allow you to set a "permissions policy," however, when researching this I discovered that the `setPermissionPolicy()` API **only** allows you to set a blanket default for every single runtime permission altogether, not per permission type. For example, I was not able to disable apps from asking for camera access *specifically*, I would have to stop it from asking for any runtime permission. As a result, I believe the utility of such a companion app to be fairly limited: It would essentially only prevent you from fat-fingering a permission grant prompt, but the convenience trade-off does not seem worth it. Additionally, the other feature which allows setting per-app permissions does not make much sense to me. Other alternatives to Fortress actually do make use of this functionality, but I think the same is achieved by simply visiting the app's permissions screen under App Info in Settings.
+I considered making a companion app which would allow you to set a "permissions policy," however, when researching this I discovered that the `setPermissionPolicy()` API **only** allows you to set a blanket default for every single runtime permission altogether, not per permission type. For example, I was not able to disable apps from asking for camera access *specifically*, I would have to stop it from asking for any runtime permission.
+
+As a result, I believe the utility of such a companion app to be fairly limited: It would essentially only prevent you from fat-fingering a permission grant prompt, but the convenience trade-off does not seem worth it. Additionally, the *other* feature (setting *per-app* permissions) does not make much sense to me: Other alternatives to Fortress actually do make use of this functionality, but I think the same is achieved by simply visiting the app's permissions screen under App Info in Settings.
 
 > [!NOTE]
 > `DELEGATION_PERMISSION_GRANT` does **not** allow us to modify **install**-time permissions. That is, we can **not** modify permissions that Android grants automatically to any app by default without a prompt. This includes whether an application is able to access the network. I have looked into this, and I do not believe it is possible for me to deny a Work Profile app's `INTERNET` permission with any available APIs I can find. Therefore, we will not entertain any feature requests asking for this functionality.
