@@ -1,0 +1,3 @@
+[submodule "fortress"]
+	path = fortress
+	url = https://github.com/jonaharagon/fortress
