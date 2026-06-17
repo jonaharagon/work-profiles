@@ -11,6 +11,8 @@ The Insular column in the tables below is the default **F-Droid** complete build
 
 ## Caveats
 
+- I've tried to make this comparison as honest, fair, and comprehensive as possible. To the best of my knowledge, it is accurate, and also accurately tracks the features Fortress *doesn't* do compared to the other apps. I don't think the apps being compared are *bad* in any way *per se*, but Fortress is geared more towards an audience willing to sacrifice convenience for privacy and security. If you believe anything in this comparison chart is wrong, or I've unfairly left out features of the other apps here, please open a GitHub issue so I can correct this page.
+
 - Fortress is pre-release. Its transport and lockdown design should be read as current source posture, not a long production track record.
 
 - I tested the Haven app, but it gets no column below. Haven is a near-verbatim rebrand of Shelter: Most of its source is byte-for-byte identical after the package rename, and its feature, security, permission, and policy entries are *identical* to Shelter's in every table, so the Shelter column applies to Haven too.

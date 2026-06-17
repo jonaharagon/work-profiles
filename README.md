@@ -2,12 +2,17 @@
 
 This is a suite of apps I've built to create and manage Android Work Profiles. The flagship app in this suite is [**Fortress**](https://github.com/jonaharagon/fortress), a minimal-as-possible Device Policy Controller which allows you to create a Work Profile that is personally managed, rather than managed by an employer and/or complex mobile management server.
 
-> [!WARNING]
-> Our security features are only as strong as the Work Profile implementation of the Android OS you are using. Some OEMs may strip capabilities or have non-functional Work Profile implementations, which we cannot resolve.
+> [!TIP]
+> In the process of developing this app (deciding whether it was worth doing at all) I've taken notes to compile (what I believe is) an honest and complete comparison of this suite of apps versus the popular alternatives (Shelter and Insular/Island). [**Read that comparison →**](https://github.com/jonaharagon/work-profiles/blob/main/COMPARISON.md)
+
+## The goal
 
 I built these apps specifically to address a longstanding problem I've had with other apps that perform a similar function (allow people to create non-employer-managed Work Profiles): The large attack surface, custom features which bypass AOSP's native isolation between Work and Profile spaces, and the lack of modernization when it comes to modern (sdk > 30) features that Android Work Profiles support.
 
-Thus, the value proposition of Fortress is **security through minimalism.** I believe I've achieved this in the following ways:
+> [!WARNING]
+> The security features are only as strong as the Work Profile implementation of the Android OS you are using. Some OEMs may strip capabilities or have non-functional Work Profile implementations, which I cannot resolve.
+
+The value proposition of Fortress is **security through minimalism.** I believe I've achieved this in the following ways:
 
 1. **Keeping the codebase tiny.**
    
@@ -30,7 +35,7 @@ Thus, the value proposition of Fortress is **security through minimalism.** I be
 ## The apps
 
 > [!IMPORTANT]
-> Fortress and its companion apps strictly **only** make use of Work Profile APIs exposed by AOSP. We will **never** implement features which require becoming your device owner or taking over your personal profile, leveraging or abusing adb privileges, implementing features which require root, or delegating privileged tasks to third-parties. We will **only** ever make use of APIs which AOSP has sanctioned for a Work Profile admin's use.
+> Fortress and its companion apps strictly **only** make use of Work Profile APIs exposed by AOSP. I will **not** implement features which require becoming your device owner or taking over your personal profile, leveraging or abusing adb privileges, implementing features which require root, or delegating privileged tasks to third-parties. These apps will **only** ever make use of APIs which AOSP has sanctioned for a Work Profile admin's use.
 
 ### Fortress
 
