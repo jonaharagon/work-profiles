@@ -4,3 +4,6 @@
 [submodule "fortress-locked"]
 	path = fortress-locked
 	url = https://github.com/jonaharagon/fortress-locked
+[submodule "freighter"]
+	path = freighter
+	url = https://github.com/jonaharagon/freighter

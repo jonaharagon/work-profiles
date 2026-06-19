@@ -56,7 +56,7 @@ For this reason, Fortress comes *bundled* with Freighter (the next app)'s APK. Y
 > [!NOTE]
 > [**You should read Fortress' own README in full for an explanation of the app's security and features →**](https://github.com/jonaharagon/fortress)
 
-### Freighter (Coming Soon)
+### Freighter
 
 **Freighter** is an app-cloning tool, which has two functions: Installing system apps in your Work Profile that may not have been installed by default, and cloning apps from your Personal profile to your Work Profile. To enable *system* apps, Freighter only has to be installed in your Work Profile. To clone apps, Freighter must be installed in your Work Profile and your Personal profile.
 
